@@ -10,7 +10,7 @@ namespace FilmLibrary.Repoository.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private readonly AppDbContext _context;
+        protected readonly AppDbContext _context;
         private readonly DbSet<T> _dbSet;
         public GenericRepository(AppDbContext context)
         {
@@ -30,6 +30,9 @@ namespace FilmLibrary.Repoository.Repositories
         public void Delete(T entity)
         {
             _dbSet.Remove(entity);
+
+            var e = _dbSet.Where(x=>x==entity).FirstOrDefault();
+            
         }
 
         public void DeleteRange(IEnumerable<T> entities)
