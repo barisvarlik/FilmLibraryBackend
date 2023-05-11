@@ -8,13 +8,26 @@ using System.Reflection;
 using FilmLibrary.Service.Mapping;
 using FilmLibrary.API.Middlewares;
 using Autofac.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using FluentValidation.AspNetCore;
+using Swashbuckle.AspNetCore.Filters;
+using FilmLibrary.Service.Validations;
+using Microsoft.OpenApi.Models;
+using FilmLibrary.API.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers(options => options.Filters.Add(new ValidateFilterAttribute())).AddFluentValidation(x =>
+{
+    x.RegisterValidatorsFromAssemblyContaining<FilmDtoValidator>();
+});
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
