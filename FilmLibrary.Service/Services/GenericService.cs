@@ -1,6 +1,8 @@
-﻿using FilmLibrary.Core.Repositories;
+﻿using FilmLibrary.Core.Interfaces;
+using FilmLibrary.Core.Repositories;
 using FilmLibrary.Core.Services;
 using FilmLibrary.Core.UnitOfWorks;
+using FilmLibrary.Service.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace FilmLibrary.Service.Services
 {
-    public class GenericService<T> : IGenericService<T> where T : class
+    public class GenericService<T> : IGenericService<T> where T : class, IDeletable
     {
         private readonly IGenericRepository<T> _repository;
         private readonly IUnitOfWork _unitOfWork;
@@ -55,7 +57,8 @@ namespace FilmLibrary.Service.Services
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _repository.GetByIdAsync(id);
+            var entity = await _repository.GetByIdAsync(id);
+            return entity ?? throw new NotFoundException($"{typeof(T).Name} not found with id({id})");
         }
 
         public async Task UpdateAsync(T entity)

@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using FilmLibrary.Core.Interfaces;
 
 namespace FilmLibrary.Repository.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class, IDeletable
     {
         protected readonly AppDbContext _context;
         private readonly DbSet<T> _dbSet;
@@ -29,25 +30,28 @@ namespace FilmLibrary.Repository.Repositories
 
         public void Delete(T entity)
         {
-            _dbSet.Remove(entity);
-
-            var e = _dbSet.Where(x => x == entity).FirstOrDefault();
-
+            entity.IsDeleted = true;
         }
 
         public void DeleteRange(IEnumerable<T> entities)
         {
-            _dbSet.RemoveRange(entities);
+            foreach (var entity in entities)
+            {
+                entity.IsDeleted = true;
+            }
         }
 
         public IQueryable<T> GetAll()
         {
-            return _dbSet.AsNoTracking().AsQueryable();
+            return _dbSet.AsNoTracking().AsQueryable().Where(x => x.IsDeleted == false);
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            var entity = await _dbSet.FindAsync(id);
+            if (entity.IsDeleted == false)
+                return entity;
+            else return null;
         }
 
         public void Update(T entity)
