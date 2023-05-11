@@ -1,12 +1,13 @@
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using FilmLibrary.API.Modules;
-using FilmLibrary.Repoository;
+using FilmLibrary.Repository;
 using Microsoft.EntityFrameworkCore;
 using FilmLibrary.Configuration;
 using System.Reflection;
 using FilmLibrary.Service.Mapping;
 using FilmLibrary.API.Middlewares;
+using Autofac.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,10 +27,22 @@ builder.Services.AddDbContext<AppDbContext>(x =>
     {
         option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
     });
+
 });
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterModule(new RepoServiceModule()));
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+{
+    containerBuilder.RegisterModule(new RepoServiceModule());
+
+    var tracer = new DefaultDiagnosticTracer();
+    tracer.OperationCompleted += (sender, args) => Console.WriteLine(args.TraceContent);
+    containerBuilder.RegisterBuildCallback(c =>
+    {
+        var container = c as IContainer;
+        container.SubscribeToDiagnostics(tracer);
+    });
+});
 
 var app = builder.Build();
 
@@ -42,7 +55,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCustomException();
+//app.UseCustomException();
 
 app.UseAuthorization();
 

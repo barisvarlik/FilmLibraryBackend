@@ -1,9 +1,10 @@
 ﻿using Autofac;
 using FilmLibrary.Core.Repositories;
 using FilmLibrary.Core.Services;
-using FilmLibrary.Repoository;
-using FilmLibrary.Repoository.Repositories;
-using FilmLibrary.Repoository.UnitOfWorks;
+using FilmLibrary.Core.UnitOfWorks;
+using FilmLibrary.Repository;
+using FilmLibrary.Repository.Repositories;
+using FilmLibrary.Repository.UnitOfWorks;
 using FilmLibrary.Service.Mapping;
 using FilmLibrary.Service.Services;
 using System.Reflection;
@@ -15,15 +16,16 @@ namespace FilmLibrary.API.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterGeneric(typeof(GenericService<>))
-                .As(typeof(IGenericService<>))
-                .InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(GenericRepository<>))
                 .As(typeof(IGenericRepository<>))
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<UnitOfWork>().As<UnitOfWork>();
+            builder.RegisterGeneric(typeof(GenericService<>))
+                .As(typeof(IGenericService<>))
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 
             var apiAssembly = Assembly.GetExecutingAssembly();
             var repoAssembly = Assembly.GetAssembly(typeof(AppDbContext));
@@ -34,10 +36,16 @@ namespace FilmLibrary.API.Modules
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterAssemblyTypes(apiAssembly, repoAssembly, serviceAssembly)
-                .Where(x => x.Name.EndsWith("Service"))
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
+            //builder.RegisterAssemblyTypes(apiAssembly, repoAssembly, serviceAssembly)
+            //    .Where(x => x.Name.EndsWith("Service"))
+            //    .AsImplementedInterfaces()
+            //    .InstancePerLifetimeScope();
+
+            builder.RegisterType<FilmService>().As<IFilmService>();
+            builder.RegisterType<StudioService>().As<IStudioService>();
+            builder.RegisterType<PersonService>().As<IPersonService>();
+
+
         }
     }
 }
