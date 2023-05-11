@@ -26,7 +26,7 @@ namespace FilmLibrary.API.Middlewares
                     };
                     context.Response.StatusCode = statusCode;
 
-                    var message = /*statusCode == 500 ? "An error is ocurred. Please try again later." :*/ exceptionFeature.Error.Message;
+                    var message = statusCode == 500 ? "An error is ocurred. Please try again later." : exceptionFeature.Error.Message;
 
                     var response = ResponseDto<NoContentDto>.Fail(statusCode, message);
 
