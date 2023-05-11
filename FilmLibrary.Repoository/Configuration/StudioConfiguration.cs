@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FilmLibrary.Repoository.Configuration
+namespace FilmLibrary.Repository.Configuration
 {
     public class StudioConfiguration : IEntityTypeConfiguration<Studio>
     {
@@ -20,7 +20,12 @@ namespace FilmLibrary.Repoository.Configuration
             builder.Property(x => x.Location).IsRequired().HasMaxLength(200);
 
             builder.HasMany(x => x.FilmsProduced).WithOne(x => x.Studio);
-            builder.HasMany(x => x.Employees).WithMany(x => x.Associations);
+
+            builder.HasMany(x => x.Employees).WithMany(x => x.Associations).UsingEntity(
+                "StudioEmployee",
+                l => l.HasOne(typeof(Person)).WithMany().HasForeignKey("PersonsId").HasPrincipalKey(nameof(Person.Id)),
+                r => r.HasOne(typeof(Studio)).WithMany().HasForeignKey("StudiosId").HasPrincipalKey(nameof(Studio.Id)),
+                j => j.HasKey("PersonsId", "StudiosId"));
         }
     }
 }

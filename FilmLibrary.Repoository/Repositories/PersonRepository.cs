@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FilmLibrary.Repoository.Repositories
+namespace FilmLibrary.Repository.Repositories
 {
     public class PersonRepository : GenericRepository<Person>, IPersonRepository
     {

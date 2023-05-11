@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace FilmLibrary.Repoository.Repositories
+namespace FilmLibrary.Repository.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
@@ -31,8 +31,8 @@ namespace FilmLibrary.Repoository.Repositories
         {
             _dbSet.Remove(entity);
 
-            var e = _dbSet.Where(x=>x==entity).FirstOrDefault();
-            
+            var e = _dbSet.Where(x => x == entity).FirstOrDefault();
+
         }
 
         public void DeleteRange(IEnumerable<T> entities)

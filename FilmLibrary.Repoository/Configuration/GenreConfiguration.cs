@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FilmLibrary.Repoository.Configuration
+namespace FilmLibrary.Repository.Configuration
 {
     public class GenreConfiguration : IEntityTypeConfiguration<Genre>
     {

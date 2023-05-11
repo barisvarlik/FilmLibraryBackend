@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmLibrary.Core", "FilmLibrary.Core\FilmLibrary.Core.csproj", "{988AC73F-C278-48C3-B771-E8C91CE657C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmLibrary.Core", "FilmLibrary.Core\FilmLibrary.Core.csproj", "{988AC73F-C278-48C3-B771-E8C91CE657C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmLibrary.Repoository", "FilmLibrary.Repoository\FilmLibrary.Repoository.csproj", "{CBC77948-DB7F-43FC-A2AA-E0BF9D9400A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmLibrary.Repository", "FilmLibrary.Repoository\FilmLibrary.Repository.csproj", "{CBC77948-DB7F-43FC-A2AA-E0BF9D9400A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmLibrary.Configuration", "FilmLibrary.Configuration\FilmLibrary.Configuration.csproj", "{C4A5216B-F941-45EB-96BB-D5CB3D0973ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmLibrary.Configuration", "FilmLibrary.Configuration\FilmLibrary.Configuration.csproj", "{C4A5216B-F941-45EB-96BB-D5CB3D0973ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmLibrary.Service", "FilmLibrary.Service\FilmLibrary.Service.csproj", "{0933E484-F31E-419D-B93C-272C1C5680AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmLibrary.Service", "FilmLibrary.Service\FilmLibrary.Service.csproj", "{0933E484-F31E-419D-B93C-272C1C5680AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmLibrary.API", "FilmLibrary.API\FilmLibrary.API.csproj", "{18116877-1348-4804-A74F-ED8F32CEBFC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmLibrary.API", "FilmLibrary.API\FilmLibrary.API.csproj", "{18116877-1348-4804-A74F-ED8F32CEBFC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
