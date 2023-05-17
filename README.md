@@ -1,4 +1,4 @@
-# FilmLibrary
+# Film Library Backend
 
 N-Layer backend application for a film library. CRUD operations with .NET, EF Core and MSSQL.
 
